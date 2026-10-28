@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BonusHub | Sign-up promotions, handled like a private account</title>
+<meta name="description" content="BonusHub is a Florida-based private client service that helps adults claim sign-up and referral promotions from investing, banking, prediction-market and gaming apps, with written terms and a record of every payout.">
+<meta name="theme-color" content="#0E0D0B">
+<link rel="canonical" href="https://bonushub.biz/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bonushub.biz/">
+<meta property="og:title" content="BonusHub">
+<meta property="og:description" content="Sign-up promotions, handled like a private account. Written terms first, a record of every payout.">
+<meta property="og:site_name" content="BonusHub">
+<meta property="og:image" content="https://bonushub.biz/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BonusHub seal with the line Your Bonus Is Waiting">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BonusHub">
+<meta name="twitter:description" content="Sign-up promotions, handled like a private account. Written terms first, a record of every payout.">
+<meta name="twitter:image" content="https://bonushub.biz/og-image.png">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Marcellus+SC&family=Manrope:wght@400;500;600&display=swap">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+/* Layout: private-bank statement. Label column on the left, content on the right, 1px gold rules, lots of air. Single dark theme by brand decision. */
+:root {
+  --onyx: #0E0D0B;
+  --charcoal: #1A1917;
+  --graphite: #2B2A27;
+  --stone: #8A857C;
+  --parchment: #EDE8DE;
+  --text: #CFC9BD;
+  --gold: #C9A96A;
+  --deep-gold: #A8864A;
+  --error: #D98C7A;
+
+  --f-display: "Marcellus", Georgia, serif;
+  --f-label: "Marcellus SC", Georgia, serif;
+  --f-body: "Manrope", Arial, Helvetica, sans-serif;
+
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  margin: 0;
+  background: var(--onyx);
+  color: var(--text);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--onyx);
+}
+a { color: inherit; }
+::selection { background: var(--deep-gold); color: var(--onyx); }
+:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1120px; margin-inline: auto;
+  padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: color-mix(in srgb, var(--onyx) 92%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--graphite);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand svg { width: 36px; height: 36px; flex: none; }
+.wordmark { font-family: var(--f-label); color: var(--gold); letter-spacing: .26em; font-size: 15px; }
+.nav { display: flex; align-items: center; gap: 28px; }
+.nav a.link {
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none;
+  color: var(--stone); transition: color .2s;
+}
+.nav a.link:hover { color: var(--parchment); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--f-body); font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; border-radius: 2px;
+  padding: 14px 22px; border: 1px solid var(--gold); transition: background .2s, color .2s, border-color .2s;
+}
+.btn-gold { background: var(--gold); color: var(--onyx); }
+.btn-gold:hover { background: var(--parchment); border-color: var(--parchment); }
+.btn-line { background: transparent; color: var(--gold); border-color: var(--deep-gold); }
+.btn-line:hover { border-color: var(--gold); color: var(--parchment); }
+.btn-sm { padding: 10px 16px; font-size: 12px; }
+
+/* Hero */
+.hero .wrap {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  gap: clamp(32px, 6vw, 88px); align-items: center;
+  padding-block: clamp(56px, 9vw, 120px) clamp(56px, 8vw, 104px);
+}
+.eyebrow {
+  font-family: var(--f-label); color: var(--gold); font-size: 13px; letter-spacing: .26em;
+  display: flex; align-items: center; gap: 14px;
+}
+.eyebrow::after { content: ""; height: 1px; width: 48px; background: var(--deep-gold); }
+.hero h1 {
+  font-family: var(--f-display); font-weight: 400; color: var(--parchment);
+  font-size: clamp(36px, 5.4vw, 62px); line-height: 1.08; letter-spacing: -.005em;
+  margin: 22px 0 0; text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--gold); }
+.lede { max-width: 56ch; margin: 24px 0 0; font-size: 18px; color: var(--text); }
+.rule { height: 1px; background: var(--deep-gold); width: 100%; max-width: 420px; margin: 36px 0 22px; transform-origin: left; animation: draw 1.4s cubic-bezier(.2,.7,.2,1) both .15s; }
+@keyframes draw { from { transform: scaleX(.12); } to { transform: scaleX(1); } }
+.cta-line { font-family: var(--f-label); font-size: 13px; letter-spacing: .22em; color: var(--stone); margin: 0 0 18px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.seal-wrap { position: relative; justify-self: center; width: 100%; max-width: 380px; aspect-ratio: 1; }
+.seal-wrap::before {
+  content: ""; position: absolute; inset: -9%; border-radius: 50%;
+  border: 1px solid var(--graphite);
+}
+.seal-wrap::after {
+  content: ""; position: absolute; inset: -18%; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--graphite) 55%, transparent);
+}
+.seal-wrap svg { position: relative; z-index: 1; width: 100%; height: 100%; display: block; }
+
+/* Sections */
+.section { border-top: 1px solid var(--graphite); }
+.section > .wrap { padding-block: clamp(64px, 9vw, 112px); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 24px 48px; align-items: baseline; margin-bottom: clamp(36px, 5vw, 56px); }
+.sec-label { font-family: var(--f-label); color: var(--gold); font-size: 13px; letter-spacing: .26em; margin: 0; }
+.sec-head h2 {
+  font-family: var(--f-display); font-weight: 400; color: var(--parchment);
+  font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; margin: 0; text-wrap: balance; max-width: 22ch;
+}
+.sec-head p { margin: 14px 0 0; max-width: 60ch; }
+
+/* Ledger: At a glance */
+.ledger { margin: 0; border-top: 1px solid var(--deep-gold); }
+.ledger-row {
+  display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 8px 48px;
+  padding-block: 22px; border-bottom: 1px solid var(--graphite);
+}
+.ledger dt { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--stone); padding-top: 3px; }
+.ledger dd { margin: 0; color: var(--parchment); font-size: 17px; max-width: 62ch; }
+.ledger-row.neg dd { color: var(--text); }
+
+/* Steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--deep-gold); }
+.step { padding: 28px 28px 8px 0; display: grid; gap: 10px; align-content: start; }
+.step + .step { padding-left: 28px; border-left: 1px solid var(--graphite); }
+.numeral { font-family: var(--f-display); color: var(--gold); font-size: 30px; line-height: 1; }
+.step h3 { font-family: var(--f-display); font-weight: 400; color: var(--parchment); font-size: 21px; margin: 6px 0 0; }
+.step p { margin: 0; font-size: 15px; }
+
+/* Standards */
+.standards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; margin: 0; }
+.standard { padding-block: 26px; border-top: 1px solid var(--graphite); display: grid; gap: 8px; }
+.standard h3 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 21px; color: var(--parchment); display: flex; align-items: baseline; gap: 14px; }
+.standard h3::before { content: ""; width: 7px; height: 7px; border: 1px solid var(--gold); transform: rotate(45deg) translateY(-2px); flex: none; }
+.standard p { margin: 0; max-width: 52ch; }
+
+/* FAQ */
+.faq { border-top: 1px solid var(--deep-gold); }
+.faq details { border-bottom: 1px solid var(--graphite); }
+.faq summary {
+  list-style: none; cursor: pointer; padding-block: 22px; display: flex; justify-content: space-between; gap: 24px; align-items: baseline;
+  font-family: var(--f-display); color: var(--parchment); font-size: 20px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-body); color: var(--gold); font-size: 22px; line-height: 1; transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .answer { padding-bottom: 24px; max-width: 66ch; }
+.faq .answer p { margin: 0; }
+
+/* Inquiry */
+.inquiry-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+.inquiry-copy h2 { font-family: var(--f-display); font-weight: 400; color: var(--parchment); font-size: clamp(30px, 3.6vw, 42px); line-height: 1.12; margin: 18px 0 0; text-wrap: balance; }
+.inquiry-copy p { margin: 18px 0 0; max-width: 46ch; }
+.notice {
+  margin-top: 28px; padding-left: 16px; border-left: 1px solid var(--deep-gold);
+  font-size: 14px; color: var(--stone);
+}
+.notice strong { color: var(--text); font-weight: 600; }
+
+.panel { background: var(--charcoal); border: 1px solid var(--graphite); border-radius: 2px; padding: clamp(22px, 3.5vw, 40px); position: relative; }
+.panel::before { content: ""; position: absolute; inset: 7px; border: 1px solid color-mix(in srgb, var(--deep-gold) 35%, transparent); pointer-events: none; }
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; position: relative; }
+.field { display: grid; gap: 8px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label, .field .label { font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--stone); }
+.field .opt { color: color-mix(in srgb, var(--stone) 70%, transparent); letter-spacing: .08em; font-weight: 500; text-transform: none; }
+input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+  width: 100%; font: inherit; font-size: 16px; color: var(--parchment);
+  background: var(--onyx); border: 1px solid var(--graphite); border-radius: 2px;
+  padding: 12px 14px; transition: border-color .2s;
+}
+textarea { min-height: 110px; resize: vertical; }
+select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: calc(100% - 20px) 52%, calc(100% - 15px) 52%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 40px; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--stone) 75%, transparent); }
+.field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--error); }
+.err { font-size: 13px; color: var(--error); }
+.choice-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.choice span {
+  display: inline-block; padding: 9px 14px; border: 1px solid var(--graphite); border-radius: 2px;
+  font-size: 14px; color: var(--text); transition: border-color .2s, color .2s;
+}
+.choice input:checked + span { border-color: var(--gold); color: var(--gold); }
+.choice input:focus-visible + span { outline: 1px solid var(--gold); outline-offset: 2px; }
+.field label.check { font-size: 14px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--text); }
+.check input { margin-top: 4px; accent-color: var(--gold); width: 16px; height: 16px; flex: none; }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 4px; }
+.form-foot small { color: var(--stone); font-size: 13px; }
+.hp { position: absolute; left: -9999px; }
+.status { grid-column: 1 / -1; font-size: 15px; padding: 14px 16px; border: 1px solid var(--deep-gold); color: var(--parchment); border-radius: 2px; }
+.status.error { border-color: var(--error); }
+.done { display: grid; gap: 14px; position: relative; padding-block: 24px; }
+.done h3 { font-family: var(--f-display); font-weight: 400; color: var(--parchment); font-size: 28px; margin: 0; }
+.done p { margin: 0; }
+
+/* Contact */
+.contacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--deep-gold); }
+.contact { padding: 24px 24px 24px 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.contact + .contact { padding-left: 24px; border-left: 1px solid var(--graphite); }
+.contact .k { font-family: var(--f-label); font-size: 13px; letter-spacing: .22em; color: var(--gold); }
+.contact .v { color: var(--parchment); font-size: 16px; overflow-wrap: anywhere; }
+.contact a.v { text-decoration: none; border-bottom: 1px solid var(--graphite); justify-self: start; transition: border-color .2s; }
+.contact a.v:hover { border-color: var(--gold); }
+.contact .soon { color: var(--stone); font-size: 14px; }
+.contact .hint { font-size: 13px; color: var(--stone); }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--graphite); background: var(--onyx); }
+.site-footer .wrap { padding-block: 48px 40px; display: grid; gap: 28px; }
+.foot-top { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; }
+.foot-nav { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.foot-nav a { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--stone); }
+.foot-nav a:hover { color: var(--parchment); }
+.disclaimer { font-size: 13px; color: var(--stone); max-width: 92ch; margin: 0; line-height: 1.7; border-top: 1px solid var(--graphite); padding-top: 24px; }
+.disclaimer strong { color: var(--text); font-weight: 600; }
+.privacy summary { cursor: pointer; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); list-style: none; }
+.privacy summary::-webkit-details-marker { display: none; }
+.privacy .body { margin-top: 16px; font-size: 14px; max-width: 72ch; display: grid; gap: 10px; }
+.privacy .body p { margin: 0; }
+.legal { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 12.5px; color: var(--stone); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step:nth-child(3) { padding-left: 0; border-left: 0; }
+  .step:nth-child(n+3) { border-top: 1px solid var(--graphite); }
+  .contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact:nth-child(3) { padding-left: 0; border-left: 0; }
+  .contact:nth-child(n+3) { border-top: 1px solid var(--graphite); }
+  .inquiry-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .nav a.link { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .seal-wrap { order: -1; justify-self: start; max-width: 168px; margin: 8px 0 0 12px; }
+  .sec-head, .ledger-row { grid-template-columns: minmax(0, 1fr); }
+  .standards { grid-template-columns: minmax(0, 1fr); }
+  .form { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .steps, .contacts { grid-template-columns: minmax(0, 1fr); }
+  .step, .step + .step, .contact, .contact + .contact { padding-left: 0; border-left: 0; padding-right: 0; }
+  .step + .step, .contact + .contact { border-top: 1px solid var(--graphite); }
+  .wordmark { font-size: 13px; letter-spacing: .22em; }
+  .btn-sm { padding: 9px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rule { animation: none; }
+  * { transition: none !important; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="BonusHub home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="40 40 160 160" aria-hidden="true"><circle cx="120" cy="120" r="76" fill="none" stroke="#A8864A" stroke-width="1.4"/><circle cx="120" cy="120" r="70" fill="none" stroke="#C9A96A" stroke-width="2.2"/><g fill="#C9A96A"><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(79.857 141.000) scale(0.029297 -0.029297)"/><path d="M1135 686Q1095 687 1035.0 687.5Q975 688 904.5 689.0Q834 690 757.5 690.5Q681 691 608.0 691.5Q535 692 469.0 691.0Q403 690 354 688V391Q354 306 356.5 242.5Q359 179 362.5 133.0Q366 87 371.5 56.0Q377 25 383 4V0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391V1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434H383V1430Q377 1409 371.5 1378.0Q366 1347 362.5 1300.5Q359 1254 356.5 1190.5Q354 1127 354 1042V786Q406 784 472.0 783.5Q538 783 610.0 783.5Q682 784 756.5 785.0Q831 786 900.5 787.5Q970 789 1030.5 791.0Q1091 793 1135 795V1042Q1135 1127 1132.5 1190.5Q1130 1254 1126.5 1300.5Q1123 1347 1117.5 1378.0Q1112 1409 1106 1430V1434H1346V1430Q1340 1409 1334.5 1378.0Q1329 1347 1325.0 1300.5Q1321 1254 1319.0 1190.5Q1317 1127 1317 1042V391Q1317 306 1319.0 242.5Q1321 179 1325.0 133.0Q1329 87 1334.5 56.0Q1340 25 1346 4V0H1106V4Q1112 25 1117.5 56.0Q1123 87 1126.5 133.0Q1130 179 1132.5 242.5Q1135 306 1135 391Z" transform="translate(116.520 141.000) scale(0.029297 -0.029297)"/></g></svg>
+      <span class="wordmark">BONUSHUB</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#standards">Standards</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#contact">Contact</a>
+      <a class="btn btn-gold btn-sm" href="#inquire">Inquire</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Private client service · Florida</div>
+        <h1>Sign-up promotions, handled like a <em>private account.</em></h1>
+        <p class="lede">BonusHub works one-on-one with adults to claim the sign-up and referral promotions offered by investing, banking, prediction-market and gaming apps. You get one point of contact, terms in writing before anything starts, and a record of every payout.</p>
+        <div class="rule" aria-hidden="true"></div>
+        <p class="cta-line">Your Bonus Is Waiting to Be Claimed</p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="#inquire">Start an inquiry</a>
+          <a class="btn btn-line" href="#contact" data-discord-cta>Join the Discord</a>
+        </div>
+      </div>
+      <div class="seal-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="BonusHub seal: Your Bonus Is Waiting"><circle cx="120" cy="120" r="114" fill="none" stroke="#C9A96A" stroke-width="1.5"/><circle cx="120" cy="120" r="109" fill="none" stroke="#A8864A" stroke-width="0.6"/><circle cx="120" cy="120" r="76" fill="none" stroke="#A8864A" stroke-width="0.6"/><circle cx="120" cy="120" r="72" fill="none" stroke="#C9A96A" stroke-width="1"/><g fill="#C9A96A"><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(66.368 47.726) rotate(323.4223) translate(-3.927 0) scale(0.006836 -0.006836)"/><path d="M797 1458Q964 1458 1105.5 1403.5Q1247 1349 1350.0 1250.5Q1453 1152 1511.0 1014.0Q1569 876 1569 709Q1569 614 1547.0 522.0Q1525 430 1482.5 348.0Q1440 266 1378.0 196.5Q1316 127 1236.5 76.5Q1157 26 1061.0 -2.5Q965 -31 854 -31Q687 -31 545.5 22.5Q404 76 301.0 174.0Q198 272 140.0 409.5Q82 547 82 715Q82 810 104.0 902.0Q126 994 168.5 1077.0Q211 1160 272.5 1229.5Q334 1299 413.5 1350.0Q493 1401 589.5 1429.5Q686 1458 797 1458ZM854 59Q965 59 1057.0 99.0Q1149 139 1215.5 215.0Q1282 291 1319.0 400.5Q1356 510 1356 649Q1356 803 1320.5 934.5Q1285 1066 1215.0 1162.5Q1145 1259 1040.5 1313.5Q936 1368 797 1368Q686 1368 594.0 1328.5Q502 1289 435.5 1214.0Q369 1139 332.0 1030.0Q295 921 295 782Q295 629 330.0 496.5Q365 364 435.0 267.0Q505 170 610.0 114.5Q715 59 854 59Z" transform="translate(80.506 39.128) rotate(333.9713) translate(-5.643 0) scale(0.006836 -0.006836)"/><path d="M199 1434 1229 338V1042Q1229 1127 1227.0 1190.5Q1225 1254 1221.0 1300.5Q1217 1347 1211.5 1378.0Q1206 1409 1200 1430V1434H1378V1430Q1372 1409 1367.0 1378.0Q1362 1347 1358.0 1300.5Q1354 1254 1352.0 1190.5Q1350 1127 1350 1042V-20H1315L285 1075V391Q285 306 287.0 242.5Q289 179 293.0 133.0Q297 87 302.0 56.0Q307 25 313 4V0H135V4Q141 25 146.5 56.0Q152 87 156.0 133.0Q160 179 162.0 242.5Q164 306 164 391V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434Z" transform="translate(97.181 32.941) rotate(345.3124) translate(-5.171 0) scale(0.006836 -0.006836)"/><path d="M1169 1042Q1169 1127 1167.0 1190.5Q1165 1254 1161.0 1300.5Q1157 1347 1152.0 1378.0Q1147 1409 1141 1430V1434H1319V1430Q1313 1409 1307.5 1378.0Q1302 1347 1298.5 1300.5Q1295 1254 1292.5 1190.5Q1290 1127 1290 1042V502Q1290 359 1249.0 258.0Q1208 157 1135.0 92.5Q1062 28 960.0 -1.5Q858 -31 737 -31Q616 -31 511.5 -3.0Q407 25 329.5 87.5Q252 150 208.0 249.5Q164 349 164 492V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434H375V1430Q369 1409 363.5 1378.0Q358 1347 354.0 1300.5Q350 1254 348.0 1190.5Q346 1127 346 1042V481Q346 362 381.5 284.5Q417 207 475.0 161.5Q533 116 607.0 98.0Q681 80 758 80Q835 80 909.0 98.0Q983 116 1040.5 161.5Q1098 207 1133.5 284.5Q1169 362 1169 481Z" transform="translate(114.074 30.195) rotate(356.2247) translate(-4.970 0) scale(0.006836 -0.006836)"/><path d="M741 1206H719Q711 1229 693.5 1258.0Q676 1287 647.5 1312.5Q619 1338 578.5 1355.0Q538 1372 483 1372Q434 1372 396.0 1357.0Q358 1342 332.5 1315.0Q307 1288 294.0 1251.0Q281 1214 281 1169Q281 1097 321.5 1031.5Q362 966 423.0 902.0Q484 838 555.0 774.0Q626 710 687.0 641.0Q748 572 788.5 496.5Q829 421 829 334Q829 269 806.5 203.5Q784 138 737.0 86.0Q690 34 616.0 1.5Q542 -31 440 -31Q383 -31 331.5 -20.5Q280 -10 236.5 5.5Q193 21 158.5 39.0Q124 57 102 72L125 293H150Q161 246 186.0 203.5Q211 161 247.5 128.5Q284 96 331.0 76.5Q378 57 434 57Q485 57 525.5 72.5Q566 88 595.0 115.5Q624 143 639.5 181.0Q655 219 655 264Q655 327 632.0 380.5Q609 434 571.5 482.0Q534 530 486.5 575.0Q439 620 389.0 665.5Q339 711 291.5 759.0Q244 807 206.5 861.5Q169 916 146.0 978.5Q123 1041 123 1116Q123 1195 153.5 1258.5Q184 1322 234.5 1367.0Q285 1412 349.0 1436.0Q413 1460 481 1460Q531 1460 573.0 1452.0Q615 1444 648.5 1433.0Q682 1422 707.0 1411.0Q732 1400 748 1393Z" transform="translate(129.209 30.472) rotate(365.8729) translate(-3.186 0) scale(0.006836 -0.006836)"/><path d="M1135 686Q1095 687 1035.0 687.5Q975 688 904.5 689.0Q834 690 757.5 690.5Q681 691 608.0 691.5Q535 692 469.0 691.0Q403 690 354 688V391Q354 306 356.5 242.5Q359 179 362.5 133.0Q366 87 371.5 56.0Q377 25 383 4V0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391V1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434H383V1430Q377 1409 371.5 1378.0Q366 1347 362.5 1300.5Q359 1254 356.5 1190.5Q354 1127 354 1042V786Q406 784 472.0 783.5Q538 783 610.0 783.5Q682 784 756.5 785.0Q831 786 900.5 787.5Q970 789 1030.5 791.0Q1091 793 1135 795V1042Q1135 1127 1132.5 1190.5Q1130 1254 1126.5 1300.5Q1123 1347 1117.5 1378.0Q1112 1409 1106 1430V1434H1346V1430Q1340 1409 1334.5 1378.0Q1329 1347 1325.0 1300.5Q1321 1254 1319.0 1190.5Q1317 1127 1317 1042V391Q1317 306 1319.0 242.5Q1321 179 1325.0 133.0Q1329 87 1334.5 56.0Q1340 25 1346 4V0H1106V4Q1112 25 1117.5 56.0Q1123 87 1126.5 133.0Q1130 179 1132.5 242.5Q1135 306 1135 391Z" transform="translate(144.199 33.314) rotate(375.5972) translate(-5.089 0) scale(0.006836 -0.006836)"/><path d="M1169 1042Q1169 1127 1167.0 1190.5Q1165 1254 1161.0 1300.5Q1157 1347 1152.0 1378.0Q1147 1409 1141 1430V1434H1319V1430Q1313 1409 1307.5 1378.0Q1302 1347 1298.5 1300.5Q1295 1254 1292.5 1190.5Q1290 1127 1290 1042V502Q1290 359 1249.0 258.0Q1208 157 1135.0 92.5Q1062 28 960.0 -1.5Q858 -31 737 -31Q616 -31 511.5 -3.0Q407 25 329.5 87.5Q252 150 208.0 249.5Q164 349 164 492V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434H375V1430Q369 1409 363.5 1378.0Q358 1347 354.0 1300.5Q350 1254 348.0 1190.5Q346 1127 346 1042V481Q346 362 381.5 284.5Q417 207 475.0 161.5Q533 116 607.0 98.0Q681 80 758 80Q835 80 909.0 98.0Q983 116 1040.5 161.5Q1098 207 1133.5 284.5Q1169 362 1169 481Z" transform="translate(160.098 39.426) rotate(386.4573) translate(-4.970 0) scale(0.006836 -0.006836)"/><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(173.632 47.726) rotate(396.5777) translate(-3.927 0) scale(0.006836 -0.006836)"/></g><g fill="#C9A96A"><path d="M727 688V391Q727 306 729.0 242.5Q731 179 735.0 133.0Q739 87 744.5 56.0Q750 25 756 4V0H516V4Q522 25 527.5 56.0Q533 87 536.5 133.0Q540 179 542.5 242.5Q545 306 545 391V668L98 1276Q75 1307 52.5 1333.0Q30 1359 10.0 1378.5Q-10 1398 -26.0 1411.0Q-42 1424 -51 1430V1434H252Q252 1411 271.5 1358.5Q291 1306 342 1235L670 786L991 1255Q1008 1280 1025.0 1306.0Q1042 1332 1056.0 1356.0Q1070 1380 1078.5 1400.0Q1087 1420 1087 1434H1282V1430Q1260 1411 1223.0 1373.5Q1186 1336 1143 1274Z" transform="translate(44.324 183.830) rotate(49.8536) translate(-3.416 0) scale(0.005371 -0.005371)"/><path d="M797 1458Q964 1458 1105.5 1403.5Q1247 1349 1350.0 1250.5Q1453 1152 1511.0 1014.0Q1569 876 1569 709Q1569 614 1547.0 522.0Q1525 430 1482.5 348.0Q1440 266 1378.0 196.5Q1316 127 1236.5 76.5Q1157 26 1061.0 -2.5Q965 -31 854 -31Q687 -31 545.5 22.5Q404 76 301.0 174.0Q198 272 140.0 409.5Q82 547 82 715Q82 810 104.0 902.0Q126 994 168.5 1077.0Q211 1160 272.5 1229.5Q334 1299 413.5 1350.0Q493 1401 589.5 1429.5Q686 1458 797 1458ZM854 59Q965 59 1057.0 99.0Q1149 139 1215.5 215.0Q1282 291 1319.0 400.5Q1356 510 1356 649Q1356 803 1320.5 934.5Q1285 1066 1215.0 1162.5Q1145 1259 1040.5 1313.5Q936 1368 797 1368Q686 1368 594.0 1328.5Q502 1289 435.5 1214.0Q369 1139 332.0 1030.0Q295 921 295 782Q295 629 330.0 496.5Q365 364 435.0 267.0Q505 170 610.0 114.5Q715 59 854 59Z" transform="translate(51.326 191.309) rotate(43.9216) translate(-4.434 0) scale(0.005371 -0.005371)"/><path d="M1169 1042Q1169 1127 1167.0 1190.5Q1165 1254 1161.0 1300.5Q1157 1347 1152.0 1378.0Q1147 1409 1141 1430V1434H1319V1430Q1313 1409 1307.5 1378.0Q1302 1347 1298.5 1300.5Q1295 1254 1292.5 1190.5Q1290 1127 1290 1042V502Q1290 359 1249.0 258.0Q1208 157 1135.0 92.5Q1062 28 960.0 -1.5Q858 -31 737 -31Q616 -31 511.5 -3.0Q407 25 329.5 87.5Q252 150 208.0 249.5Q164 349 164 492V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434H375V1430Q369 1409 363.5 1378.0Q358 1347 354.0 1300.5Q350 1254 348.0 1190.5Q346 1127 346 1042V481Q346 362 381.5 284.5Q417 207 475.0 161.5Q533 116 607.0 98.0Q681 80 758 80Q835 80 909.0 98.0Q983 116 1040.5 161.5Q1098 207 1133.5 284.5Q1169 362 1169 481Z" transform="translate(59.450 198.324) rotate(37.7066) translate(-3.905 0) scale(0.005371 -0.005371)"/><path d="M354 391Q354 306 356.5 242.5Q359 179 362.5 133.0Q366 87 371.5 56.0Q377 25 383 4V0H143V4Q149 25 154.5 56.0Q160 87 163.5 133.0Q167 179 169.5 242.0Q172 305 172 391V1042Q172 1127 169.5 1190.5Q167 1254 163.5 1300.0Q160 1346 154.5 1377.5Q149 1409 143 1430V1434L185 1430Q204 1428 227.5 1427.5Q251 1427 276 1427Q315 1427 381.5 1436.5Q448 1446 551 1446Q647 1446 728.5 1420.0Q810 1394 870.0 1344.0Q930 1294 963.5 1221.5Q997 1149 997 1057Q997 985 978.5 923.5Q960 862 926.5 812.0Q893 762 846.0 723.5Q799 685 741 659L1092 166Q1118 129 1140.5 102.0Q1163 75 1183.5 55.5Q1204 36 1223.0 23.5Q1242 11 1262 4V0H973Q970 19 953.5 50.5Q937 82 915 113L561 612Q538 610 515.0 608.5Q492 607 468 607Q440 607 411.5 609.0Q383 611 354 616ZM354 694Q381 688 409.0 685.5Q437 683 463 683Q538 683 600.0 705.5Q662 728 705.5 774.0Q749 820 773.0 888.5Q797 957 797 1049Q797 1124 780.0 1185.0Q763 1246 729.5 1288.5Q696 1331 645.0 1354.5Q594 1378 526 1378Q457 1378 416.0 1371.0Q375 1364 354 1356Z" transform="translate(67.279 203.794) rotate(32.1771) translate(-3.250 0) scale(0.005371 -0.005371)"/><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(80.011 210.564) rotate(23.8241) translate(-3.086 0) scale(0.005371 -0.005371)"/><path d="M797 1458Q964 1458 1105.5 1403.5Q1247 1349 1350.0 1250.5Q1453 1152 1511.0 1014.0Q1569 876 1569 709Q1569 614 1547.0 522.0Q1525 430 1482.5 348.0Q1440 266 1378.0 196.5Q1316 127 1236.5 76.5Q1157 26 1061.0 -2.5Q965 -31 854 -31Q687 -31 545.5 22.5Q404 76 301.0 174.0Q198 272 140.0 409.5Q82 547 82 715Q82 810 104.0 902.0Q126 994 168.5 1077.0Q211 1160 272.5 1229.5Q334 1299 413.5 1350.0Q493 1401 589.5 1429.5Q686 1458 797 1458ZM854 59Q965 59 1057.0 99.0Q1149 139 1215.5 215.0Q1282 291 1319.0 400.5Q1356 510 1356 649Q1356 803 1320.5 934.5Q1285 1066 1215.0 1162.5Q1145 1259 1040.5 1313.5Q936 1368 797 1368Q686 1368 594.0 1328.5Q502 1289 435.5 1214.0Q369 1139 332.0 1030.0Q295 921 295 782Q295 629 330.0 496.5Q365 364 435.0 267.0Q505 170 610.0 114.5Q715 59 854 59Z" transform="translate(89.271 214.110) rotate(18.0832) translate(-4.434 0) scale(0.005371 -0.005371)"/><path d="M199 1434 1229 338V1042Q1229 1127 1227.0 1190.5Q1225 1254 1221.0 1300.5Q1217 1347 1211.5 1378.0Q1206 1409 1200 1430V1434H1378V1430Q1372 1409 1367.0 1378.0Q1362 1347 1358.0 1300.5Q1354 1254 1352.0 1190.5Q1350 1127 1350 1042V-20H1315L285 1075V391Q285 306 287.0 242.5Q289 179 293.0 133.0Q297 87 302.0 56.0Q307 25 313 4V0H135V4Q141 25 146.5 56.0Q152 87 156.0 133.0Q160 179 162.0 242.5Q164 306 164 391V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434Z" transform="translate(99.795 216.916) rotate(11.7766) translate(-4.063 0) scale(0.005371 -0.005371)"/><path d="M1169 1042Q1169 1127 1167.0 1190.5Q1165 1254 1161.0 1300.5Q1157 1347 1152.0 1378.0Q1147 1409 1141 1430V1434H1319V1430Q1313 1409 1307.5 1378.0Q1302 1347 1298.5 1300.5Q1295 1254 1292.5 1190.5Q1290 1127 1290 1042V502Q1290 359 1249.0 258.0Q1208 157 1135.0 92.5Q1062 28 960.0 -1.5Q858 -31 737 -31Q616 -31 511.5 -3.0Q407 25 329.5 87.5Q252 150 208.0 249.5Q164 349 164 492V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434H375V1430Q369 1409 363.5 1378.0Q358 1347 354.0 1300.5Q350 1254 348.0 1190.5Q346 1127 346 1042V481Q346 362 381.5 284.5Q417 207 475.0 161.5Q533 116 607.0 98.0Q681 80 758 80Q835 80 909.0 98.0Q983 116 1040.5 161.5Q1098 207 1133.5 284.5Q1169 362 1169 481Z" transform="translate(110.036 218.497) rotate(5.7761) translate(-3.905 0) scale(0.005371 -0.005371)"/><path d="M741 1206H719Q711 1229 693.5 1258.0Q676 1287 647.5 1312.5Q619 1338 578.5 1355.0Q538 1372 483 1372Q434 1372 396.0 1357.0Q358 1342 332.5 1315.0Q307 1288 294.0 1251.0Q281 1214 281 1169Q281 1097 321.5 1031.5Q362 966 423.0 902.0Q484 838 555.0 774.0Q626 710 687.0 641.0Q748 572 788.5 496.5Q829 421 829 334Q829 269 806.5 203.5Q784 138 737.0 86.0Q690 34 616.0 1.5Q542 -31 440 -31Q383 -31 331.5 -20.5Q280 -10 236.5 5.5Q193 21 158.5 39.0Q124 57 102 72L125 293H150Q161 246 186.0 203.5Q211 161 247.5 128.5Q284 96 331.0 76.5Q378 57 434 57Q485 57 525.5 72.5Q566 88 595.0 115.5Q624 143 639.5 181.0Q655 219 655 264Q655 327 632.0 380.5Q609 434 571.5 482.0Q534 530 486.5 575.0Q439 620 389.0 665.5Q339 711 291.5 759.0Q244 807 206.5 861.5Q169 916 146.0 978.5Q123 1041 123 1116Q123 1195 153.5 1258.5Q184 1322 234.5 1367.0Q285 1412 349.0 1436.0Q413 1460 481 1460Q531 1460 573.0 1452.0Q615 1444 648.5 1433.0Q682 1422 707.0 1411.0Q732 1400 748 1393Z" transform="translate(118.827 218.993) rotate(0.6787) translate(-2.503 0) scale(0.005371 -0.005371)"/><path d="M152 4Q158 25 163.0 56.0Q168 87 172.0 133.0Q176 179 178.0 242.5Q180 306 180 391V1042Q180 1127 178.0 1190.5Q176 1254 172.0 1300.5Q168 1347 163.0 1378.0Q158 1409 152 1430V1434H391V1430Q385 1409 379.5 1378.0Q374 1347 370.5 1300.5Q367 1254 364.5 1190.5Q362 1127 362 1042V391Q362 306 364.5 242.5Q367 179 370.5 133.0Q374 87 379.5 56.0Q385 25 391 4V0H152Z" transform="translate(130.864 218.402) rotate(-6.3004) translate(-1.458 0) scale(0.005371 -0.005371)"/><path d="M741 1206H719Q711 1229 693.5 1258.0Q676 1287 647.5 1312.5Q619 1338 578.5 1355.0Q538 1372 483 1372Q434 1372 396.0 1357.0Q358 1342 332.5 1315.0Q307 1288 294.0 1251.0Q281 1214 281 1169Q281 1097 321.5 1031.5Q362 966 423.0 902.0Q484 838 555.0 774.0Q626 710 687.0 641.0Q748 572 788.5 496.5Q829 421 829 334Q829 269 806.5 203.5Q784 138 737.0 86.0Q690 34 616.0 1.5Q542 -31 440 -31Q383 -31 331.5 -20.5Q280 -10 236.5 5.5Q193 21 158.5 39.0Q124 57 102 72L125 293H150Q161 246 186.0 203.5Q211 161 247.5 128.5Q284 96 331.0 76.5Q378 57 434 57Q485 57 525.5 72.5Q566 88 595.0 115.5Q624 143 639.5 181.0Q655 219 655 264Q655 327 632.0 380.5Q609 434 571.5 482.0Q534 530 486.5 575.0Q439 620 389.0 665.5Q339 711 291.5 759.0Q244 807 206.5 861.5Q169 916 146.0 978.5Q123 1041 123 1116Q123 1195 153.5 1258.5Q184 1322 234.5 1367.0Q285 1412 349.0 1436.0Q413 1460 481 1460Q531 1460 573.0 1452.0Q615 1444 648.5 1433.0Q682 1422 707.0 1411.0Q732 1400 748 1393Z" transform="translate(137.160 217.501) rotate(-9.9819) translate(-2.503 0) scale(0.005371 -0.005371)"/><path d="M1079 1245 1479 274 1868 1227Q1891 1286 1902.0 1327.0Q1913 1368 1913 1397Q1913 1406 1912.0 1415.5Q1911 1425 1909 1430V1434H2107V1430Q2087 1408 2063.5 1360.0Q2040 1312 2009 1241L1475 -31H1399L1010 913L655 -31H580L90 1192Q72 1235 53.5 1275.0Q35 1315 18.5 1347.0Q2 1379 -11.5 1401.0Q-25 1423 -31 1430V1434H246V1430Q244 1419 244.0 1413.0Q244 1407 244 1399Q244 1365 251.5 1327.0Q259 1289 281 1235L657 285L1016 1241Z" transform="translate(152.795 213.410) rotate(-19.3452) translate(-5.578 0) scale(0.005371 -0.005371)"/><path d="M1135 0V4Q1137 9 1138.0 19.0Q1139 29 1139 37Q1139 68 1130.5 105.5Q1122 143 1098 199L977 471Q921 473 828.0 473.0Q735 473 627 473Q548 473 474.5 473.0Q401 473 342 471L227 207Q212 170 195.0 126.0Q178 82 178 37Q178 24 180.0 15.5Q182 7 184 4V0H-20V4Q-2 23 25.0 71.5Q52 120 84 193L657 1464H737L1280 242Q1299 199 1319.5 158.5Q1340 118 1358.0 86.0Q1376 54 1390.0 32.0Q1404 10 1409 4V0ZM487 559Q545 559 606.0 559.5Q667 560 725.5 560.5Q784 561 838.0 561.5Q892 562 936 563L655 1198L379 559Z" transform="translate(163.587 208.889) rotate(-26.1212) translate(-3.730 0) scale(0.005371 -0.005371)"/><path d="M152 4Q158 25 163.0 56.0Q168 87 172.0 133.0Q176 179 178.0 242.5Q180 306 180 391V1042Q180 1127 178.0 1190.5Q176 1254 172.0 1300.5Q168 1347 163.0 1378.0Q158 1409 152 1430V1434H391V1430Q385 1409 379.5 1378.0Q374 1347 370.5 1300.5Q367 1254 364.5 1190.5Q362 1127 362 1042V391Q362 306 364.5 242.5Q367 179 370.5 133.0Q374 87 379.5 56.0Q385 25 391 4V0H152Z" transform="translate(170.266 205.290) rotate(-30.5130) translate(-1.458 0) scale(0.005371 -0.005371)"/><path d="M520 1346Q402 1346 307.0 1335.5Q212 1325 143 1313Q63 1298 0 1280L29 1442Q41 1441 65.0 1440.0Q89 1439 118.5 1438.0Q148 1437 180.5 1436.5Q213 1436 242.0 1435.5Q271 1435 293.5 1434.5Q316 1434 326 1434H897Q907 1434 929.5 1434.5Q952 1435 981.0 1435.5Q1010 1436 1042.5 1436.5Q1075 1437 1104.5 1438.0Q1134 1439 1158.0 1440.0Q1182 1441 1194 1442L1223 1280Q1159 1298 1079 1313Q1010 1325 915.0 1335.5Q820 1346 702 1346V391Q702 306 704.5 242.5Q707 179 710.5 133.0Q714 87 719.5 56.0Q725 25 731 4V0H492V4Q498 25 503.0 56.0Q508 87 512.0 133.0Q516 179 518.0 242.5Q520 306 520 391Z" transform="translate(176.283 201.445) rotate(-34.6468) translate(-3.284 0) scale(0.005371 -0.005371)"/><path d="M152 4Q158 25 163.0 56.0Q168 87 172.0 133.0Q176 179 178.0 242.5Q180 306 180 391V1042Q180 1127 178.0 1190.5Q176 1254 172.0 1300.5Q168 1347 163.0 1378.0Q158 1409 152 1430V1434H391V1430Q385 1409 379.5 1378.0Q374 1347 370.5 1300.5Q367 1254 364.5 1190.5Q362 1127 362 1042V391Q362 306 364.5 242.5Q367 179 370.5 133.0Q374 87 379.5 56.0Q385 25 391 4V0H152Z" transform="translate(182.008 197.175) rotate(-38.7806) translate(-1.458 0) scale(0.005371 -0.005371)"/><path d="M199 1434 1229 338V1042Q1229 1127 1227.0 1190.5Q1225 1254 1221.0 1300.5Q1217 1347 1211.5 1378.0Q1206 1409 1200 1430V1434H1378V1430Q1372 1409 1367.0 1378.0Q1362 1347 1358.0 1300.5Q1354 1254 1352.0 1190.5Q1350 1127 1350 1042V-20H1315L285 1075V391Q285 306 287.0 242.5Q289 179 293.0 133.0Q297 87 302.0 56.0Q307 25 313 4V0H135V4Q141 25 146.5 56.0Q152 87 156.0 133.0Q160 179 162.0 242.5Q164 306 164 391V1042Q164 1127 162.0 1190.5Q160 1254 156.0 1300.5Q152 1347 146.5 1378.0Q141 1409 135 1430V1434Z" transform="translate(187.978 191.972) rotate(-43.3651) translate(-4.063 0) scale(0.005371 -0.005371)"/><path d="M1405 168Q1405 157 1402.5 145.0Q1400 133 1391 125Q1346 91 1293.5 62.5Q1241 34 1180.0 13.0Q1119 -8 1048.5 -19.5Q978 -31 897 -31Q715 -31 565.0 22.5Q415 76 307.5 174.0Q200 272 141.0 409.5Q82 547 82 715Q82 810 106.5 902.0Q131 994 178.0 1077.0Q225 1160 294.0 1229.5Q363 1299 451.5 1350.0Q540 1401 646.5 1429.5Q753 1458 877 1458Q925 1458 975.0 1453.5Q1025 1449 1074.0 1440.5Q1123 1432 1168.5 1420.0Q1214 1408 1255 1393L1323 1208L1315 1204Q1276 1239 1225.0 1269.0Q1174 1299 1116.0 1321.0Q1058 1343 994.5 1355.5Q931 1368 866 1368Q740 1368 635.0 1328.5Q530 1289 454.5 1214.0Q379 1139 337.0 1030.0Q295 921 295 782Q295 629 335.0 498.0Q375 367 454.0 271.0Q533 175 651.5 120.5Q770 66 928 66Q998 66 1053.0 77.0Q1108 88 1146.0 104.5Q1184 121 1203.5 140.5Q1223 160 1223 176V215Q1223 285 1221.0 336.0Q1219 387 1215.0 424.5Q1211 462 1206.0 489.0Q1201 516 1194 539V543H1434V539Q1428 518 1422.5 489.5Q1417 461 1413.0 422.0Q1409 383 1407.0 330.5Q1405 278 1405 209Z" transform="translate(195.244 184.337) rotate(-49.4682) translate(-4.082 0) scale(0.005371 -0.005371)"/></g><circle cx="25.5" cy="120" r="2" fill="#C9A96A"/><circle cx="214.5" cy="120" r="2" fill="#C9A96A"/><g fill="#C9A96A"><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(79.857 141.000) scale(0.029297 -0.029297)"/><path d="M1135 686Q1095 687 1035.0 687.5Q975 688 904.5 689.0Q834 690 757.5 690.5Q681 691 608.0 691.5Q535 692 469.0 691.0Q403 690 354 688V391Q354 306 356.5 242.5Q359 179 362.5 133.0Q366 87 371.5 56.0Q377 25 383 4V0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391V1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434H383V1430Q377 1409 371.5 1378.0Q366 1347 362.5 1300.5Q359 1254 356.5 1190.5Q354 1127 354 1042V786Q406 784 472.0 783.5Q538 783 610.0 783.5Q682 784 756.5 785.0Q831 786 900.5 787.5Q970 789 1030.5 791.0Q1091 793 1135 795V1042Q1135 1127 1132.5 1190.5Q1130 1254 1126.5 1300.5Q1123 1347 1117.5 1378.0Q1112 1409 1106 1430V1434H1346V1430Q1340 1409 1334.5 1378.0Q1329 1347 1325.0 1300.5Q1321 1254 1319.0 1190.5Q1317 1127 1317 1042V391Q1317 306 1319.0 242.5Q1321 179 1325.0 133.0Q1329 87 1334.5 56.0Q1340 25 1346 4V0H1106V4Q1112 25 1117.5 56.0Q1123 87 1126.5 133.0Q1130 179 1132.5 242.5Q1135 306 1135 391Z" transform="translate(116.520 141.000) scale(0.029297 -0.029297)"/></g></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="glance" aria-labelledby="glance-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-label">At a glance</p>
+        <h2 id="glance-h">What BonusHub is, in five lines.</h2>
+      </div>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>What we do</dt><dd>Find the promotions you qualify for, walk you through each requirement, and track every payout until it's settled.</dd></div>
+        <div class="ledger-row"><dt>Who it's for</dt><dd>Adults who meet each platform's own age and location rules. Some platforms require you to be 21 or older.</dd></div>
+        <div class="ledger-row"><dt>How terms work</dt><dd>Your arrangement is agreed in writing before you start: what you do, what you receive, and when.</dd></div>
+        <div class="ledger-row neg"><dt>What we are not</dt><dd>A sportsbook, casino, lender, or investment advisor. We don't fund, hold, or control your accounts. Every account is opened and run by you, with your own money.</dd></div>
+        <div class="ledger-row neg"><dt>What we never promise</dt><dd>A guaranteed return. Each promotion is set by its platform and can change or end at any time.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-label">How it works</p>
+        <div>
+          <h2 id="how-h">Four steps, in this order.</h2>
+          <p>Nothing starts until you've seen the terms. Most people come to us through a friend or one of our posts, so if someone referred you, mention them.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="numeral">I</span><h3>Inquiry</h3><p>Send the short form below, or message us on Discord or social media.</p></li>
+        <li class="step"><span class="numeral">II</span><h3>Conversation</h3><p>We go over which programs you're eligible for where you live and what each one asks of you.</p></li>
+        <li class="step"><span class="numeral">III</span><h3>Written terms</h3><p>You receive the arrangement in writing. Ask questions, take your time, then decide.</p></li>
+        <li class="step"><span class="numeral">IV</span><h3>Records &amp; payout</h3><p>Every step and payment is logged. Ask for your statement whenever you want it.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="standards" aria-labelledby="standards-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-label">Standards</p>
+        <h2 id="standards-h">How we work with every client.</h2>
+      </div>
+      <div class="standards">
+        <div class="standard"><h3>Terms first</h3><p>You see the full arrangement in writing before you sign up for anything.</p></div>
+        <div class="standard"><h3>A record of everything</h3><p>Dates, amounts and payouts are kept in a ledger for each client, so there's never a question about what's owed.</p></div>
+        <div class="standard"><h3>Discretion</h3><p>Your contact details stay private and are used only for your arrangement with us.</p></div>
+        <div class="standard"><h3>Within the rules</h3><p>We work inside each platform's own rules on age, location and accounts. If you don't qualify for a program, we'll tell you. You open and fund your own accounts, and you stay in control of them the whole time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-label">Questions</p>
+        <h2 id="faq-h">What people ask first.</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Is BonusHub a sportsbook or betting app?</summary><div class="answer"><p>No. BonusHub is a client service. The promotions themselves are offered by separate apps, and you open any account directly with that app under its own terms.</p></div></details>
+        <details><summary>Is there a guaranteed return?</summary><div class="answer"><p>No. Every promotion has conditions set by its platform, and platforms can change or end an offer at any time. We explain what each one requires before you start, so you can decide with the full picture.</p></div></details>
+        <details><summary>Who can work with BonusHub?</summary><div class="answer"><p>Adults who meet each platform's own eligibility rules. Age minimums and available states differ from app to app, and some require you to be 21 or older. We'll only suggest programs you qualify for.</p></div></details>
+        <details><summary>How do I get paid?</summary><div class="answer"><p>You claim each bonus in your own account, and the platform pays it to you directly. Our fee and when it's due are agreed in writing before you begin, and every payment is recorded in your client ledger. You can ask for a statement at any time.</p></div></details>
+        <details><summary>Do you put money in my account?</summary><div class="answer"><p>No. BonusHub never deposits into, funds, or logs into client accounts. You open and fund every account yourself, and you stay in control of it.</p></div></details>
+        <details><summary>Someone referred me. Does that matter?</summary><div class="answer"><p>Yes. Put their name or code in the "Referred by" box on the form so they get credit.</p></div></details>
+        <details><summary>What information will you ask for?</summary><div class="answer"><p>The inquiry form asks only for contact details. If a specific arrangement later needs identity verification, we'll explain why and how it's kept before collecting anything. Never send photos of your ID, account numbers or passwords through the form or in a DM.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="inquire" aria-labelledby="inquire-h">
+    <div class="wrap inquiry-grid">
+      <div class="inquiry-copy">
+        <p class="sec-label">Start an inquiry</p>
+        <h2 id="inquire-h">Tell us how to reach you.</h2>
+        <p>A few details are all we need to start the conversation. We'll contact you the way you choose below.</p>
+        <p class="notice"><strong>Keep it to contact details.</strong> Don't include ID photos, Social Security numbers, account numbers or passwords. We'll never ask for those here.</p>
+      </div>
+
+      <div class="panel">
+        <form class="form" id="inquiry-form" name="inquiry" novalidate>
+          <input type="hidden" name="form-name" value="inquiry">
+          <p class="hp"><label for="company">Leave this empty</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></p>
+
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required><span class="err" hidden></span></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><span class="err" hidden></span></div>
+          <div class="field"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="f-state">State</label>
+            <select id="f-state" name="state" required>
+              <option value="">Select your state</option>
+            </select><span class="err" hidden></span></div>
+          <div class="field"><label for="f-source">How did you find us?</label>
+            <select id="f-source" name="source" required>
+              <option value="">Choose one</option>
+              <option>Referred by a friend or client</option>
+              <option>Instagram</option>
+              <option>TikTok</option>
+              <option>Discord</option>
+              <option>Other</option>
+            </select><span class="err" hidden></span></div>
+          <div class="field"><label for="f-ref">Referred by <span class="opt">name or code, optional</span></label><input id="f-ref" name="referred_by" type="text"></div>
+
+          <fieldset class="field full" style="border:0;margin:0;padding:0">
+            <legend class="label" style="padding:0;margin-bottom:8px">Best way to reach you</legend>
+            <div class="choice-row">
+              <label class="choice"><input type="radio" name="contact_method" value="Text" id="cm-text" checked><span>Text</span></label>
+              <label class="choice"><input type="radio" name="contact_method" value="Email" id="cm-email"><span>Email</span></label>
+              <label class="choice"><input type="radio" name="contact_method" value="Discord" id="cm-discord"><span>Discord</span></label>
+              <label class="choice"><input type="radio" name="contact_method" value="Instagram DM" id="cm-ig"><span>Instagram DM</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field full"><label for="f-msg">Anything we should know? <span class="opt">optional</span></label><textarea id="f-msg" name="message" placeholder="Your Discord or Instagram handle, the best time to reach you, questions you have."></textarea></div>
+
+          <div class="field full">
+            <label class="check" for="f-age"><input id="f-age" name="confirm_age" type="checkbox" value="yes" required><span>I'm 18 or older, and I understand each platform sets its own age and location requirements.</span></label>
+            <span class="err" hidden></span>
+          </div>
+
+          <div class="status" id="form-status" role="status" hidden></div>
+
+          <div class="form-foot">
+            <small>We use these details only to respond to you. See the privacy notice below.</small>
+            <button class="btn btn-gold" type="submit" id="f-submit">Send inquiry</button>
+          </div>
+        </form>
+
+        <div class="done" id="form-done" hidden>
+          <span class="sec-label">Inquiry received</span>
+          <h3 id="done-h">Thank you.</h3>
+          <p id="done-p">We'll be in touch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-label">Contact</p>
+        <div>
+          <h2 id="contact-h">Other ways to reach us.</h2>
+          <p>The Discord has a public lobby where you can ask questions before you commit to anything.</p>
+        </div>
+      </div>
+      <div class="contacts" id="contacts"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="brand" href="#top" aria-label="BonusHub home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="40 40 160 160" aria-hidden="true"><circle cx="120" cy="120" r="76" fill="none" stroke="#A8864A" stroke-width="1.4"/><circle cx="120" cy="120" r="70" fill="none" stroke="#C9A96A" stroke-width="2.2"/><g fill="#C9A96A"><path d="M172 1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434Q163 1433 185 1433Q204 1432 227.5 1432.0Q251 1432 276 1432Q312 1432 373.5 1439.0Q435 1446 532 1446Q622 1446 698.0 1422.5Q774 1399 829.5 1355.0Q885 1311 916.5 1246.5Q948 1182 948 1100Q948 1031 929.0 976.5Q910 922 875.5 881.5Q841 841 792.5 813.5Q744 786 686 770Q771 757 841.0 726.5Q911 696 961.5 650.0Q1012 604 1039.5 542.5Q1067 481 1067 406Q1067 195 928.0 89.5Q789 -16 512 -16Q482 -16 442.0 -13.5Q402 -11 360.5 -8.0Q319 -5 279.0 -2.5Q239 0 209 0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391ZM539 709Q471 709 425.0 704.0Q379 699 354 694V391Q354 274 358.0 198.0Q362 122 369 74Q407 69 445.0 65.0Q483 61 506 61Q693 61 779.5 144.5Q866 228 866 401Q866 469 845.5 525.5Q825 582 784.5 623.0Q744 664 682.5 686.5Q621 709 539 709ZM354 784Q382 781 404.0 780.5Q426 780 451 780Q519 780 575.0 799.5Q631 819 670.5 858.0Q710 897 732.0 955.5Q754 1014 754 1092Q754 1157 738.0 1210.0Q722 1263 690.5 1300.5Q659 1338 613.0 1358.0Q567 1378 508 1378Q470 1378 441.5 1375.0Q413 1372 393 1368Q370 1364 354 1358Z" transform="translate(79.857 141.000) scale(0.029297 -0.029297)"/><path d="M1135 686Q1095 687 1035.0 687.5Q975 688 904.5 689.0Q834 690 757.5 690.5Q681 691 608.0 691.5Q535 692 469.0 691.0Q403 690 354 688V391Q354 306 356.5 242.5Q359 179 362.5 133.0Q366 87 371.5 56.0Q377 25 383 4V0H143V4Q149 25 154.5 56.0Q160 87 164.0 133.0Q168 179 170.0 242.5Q172 306 172 391V1042Q172 1127 170.0 1190.5Q168 1254 164.0 1300.5Q160 1347 154.5 1378.0Q149 1409 143 1430V1434H383V1430Q377 1409 371.5 1378.0Q366 1347 362.5 1300.5Q359 1254 356.5 1190.5Q354 1127 354 1042V786Q406 784 472.0 783.5Q538 783 610.0 783.5Q682 784 756.5 785.0Q831 786 900.5 787.5Q970 789 1030.5 791.0Q1091 793 1135 795V1042Q1135 1127 1132.5 1190.5Q1130 1254 1126.5 1300.5Q1123 1347 1117.5 1378.0Q1112 1409 1106 1430V1434H1346V1430Q1340 1409 1334.5 1378.0Q1329 1347 1325.0 1300.5Q1321 1254 1319.0 1190.5Q1317 1127 1317 1042V391Q1317 306 1319.0 242.5Q1321 179 1325.0 133.0Q1329 87 1334.5 56.0Q1340 25 1346 4V0H1106V4Q1112 25 1117.5 56.0Q1123 87 1126.5 133.0Q1130 179 1132.5 242.5Q1135 306 1135 391Z" transform="translate(116.520 141.000) scale(0.029297 -0.029297)"/></g></svg><span class="wordmark">BONUSHUB</span></a>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="#how">How it works</a><a href="#standards">Standards</a><a href="#faq">FAQ</a><a href="#inquire">Inquire</a><a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <p class="disclaimer"><strong>BonusHub is not a sportsbook, casino, bank, lender or financial advisor.</strong> Promotions are offered and controlled by each platform, may change or end at any time, and carry their own terms and eligibility rules. Nothing on this site is a promise of any return. Services are limited to adults who meet each platform's requirements. If gambling stops being fun, call or text 1-800-GAMBLER for free, confidential help.</p>
+    <details class="privacy" id="privacy">
+      <summary>Privacy notice</summary>
+      <div class="body">
+        <p><strong>What we collect.</strong> The details you enter in the inquiry form: name, email, phone, state, how you found us, who referred you, your preferred contact method and any message.</p>
+        <p><strong>Why.</strong> To respond to your inquiry and, if you become a client, to run your arrangement and keep accurate records.</p>
+        <p><strong>Where it's kept.</strong> With the service that hosts this form and in our business email. We don't sell your information or share it for advertising.</p>
+        <p><strong>Your choices.</strong> Ask us at any time to see, correct or delete what you sent us, using any contact method on this page.</p>
+      </div>
+    </details>
+    <div class="legal"><span>© 2026 BonusHub · bonushub.biz</span><span>Your Bonus Is Waiting</span></div>
+  </div>
+</footer>
+
+<script>
+/* ── Edit your links here. Leave a value empty ("") and the site shows "Coming soon". ── */
+const LINKS = {
+  discord:   "",   // e.g. https://discord.gg/yourinvite
+  instagram: "https://instagram.com/bon.ushub",
+  tiktok:    "",   // e.g. https://tiktok.com/@bonushub
+  email:     "primary@bonushub.biz"
+};
+
+/* ── Inquiry form: paste your free Web3Forms access key between the quotes (web3forms.com → enter primary@bonushub.biz → key arrives by email).
+   Until a key is set, "Send inquiry" opens the visitor's email app with their inquiry filled in, addressed to LINKS.email. ── */
+const FORM_KEY = "";
+
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+
+  // Contact cards
+  const handle = url => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  const cards = [
+    { k: "Discord", url: LINKS.discord, hint: "Public lobby" },
+    { k: "Instagram", url: LINKS.instagram, hint: "DMs open" },
+    { k: "TikTok", url: LINKS.tiktok, hint: "Posts and updates" },
+    { k: "Email", email: LINKS.email, hint: "For anything detailed" }
+  ];
+  const box = $("#contacts");
+  cards.forEach(c => {
+    const el = document.createElement("div");
+    el.className = "contact";
+    const k = document.createElement("span"); k.className = "k"; k.textContent = c.k; el.appendChild(k);
+    if (c.url) {
+      const a = document.createElement("a"); a.className = "v"; a.href = c.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = handle(c.url); el.appendChild(a);
+    } else if (c.email) {
+      const v = document.createElement("span"); v.className = "v"; v.textContent = c.email; el.appendChild(v);
+      const a = document.createElement("a"); a.className = "hint"; a.href = "mailto:" + c.email; a.textContent = "Open in your mail app"; el.appendChild(a);
+    } else {
+      const s = document.createElement("span"); s.className = "soon"; s.textContent = "Coming soon"; el.appendChild(s);
+    }
+    if (c.url || !c.email) { const h = document.createElement("span"); h.className = "hint"; h.textContent = c.hint; el.appendChild(h); }
+    box.appendChild(el);
+  });
+  const dcta = $("[data-discord-cta]");
+  if (LINKS.discord) { dcta.href = LINKS.discord; dcta.target = "_blank"; dcta.rel = "noopener"; }
+  else { dcta.textContent = "Ways to reach us"; }
+
+  // States
+  const states = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
+  const sel = $("#f-state");
+  states.forEach(s => { const o = document.createElement("option"); o.textContent = s; sel.appendChild(o); });
+
+  // Form
+  const form = $("#inquiry-form");
+  const status = $("#form-status");
+  const msgs = {
+    name: "Enter your name.",
+    email: "Enter an email address like name@example.com.",
+    state: "Choose your state.",
+    source: "Tell us how you found us.",
+    confirm_age: "Confirm you're 18 or older to send this."
+  };
+  function setErr(input, text) {
+    const f = input.closest(".field"); const e = f && f.querySelector(".err");
+    if (!f || !e) return;
+    f.classList.toggle("invalid", !!text); e.hidden = !text; e.textContent = text || "";
+  }
+  function validate() {
+    let first = null;
+    ["name", "email", "state", "source", "confirm_age"].forEach(n => {
+      const i = form.elements[n];
+      const bad = i.type === "checkbox" ? !i.checked : !i.value.trim() || (i.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()));
+      setErr(i, bad ? msgs[n] : "");
+      if (bad && !first) first = i;
+    });
+    if (first) first.focus();
+    return !first;
+  }
+  form.addEventListener("input", e => { if (e.target.closest(".field.invalid")) setErr(e.target, ""); });
+  form.addEventListener("change", e => { if (e.target.closest(".field.invalid")) setErr(e.target, ""); });
+
+  const live = /(^|\.)bonushub\.biz$|\.github\.io$/.test(location.hostname);
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    status.hidden = true; status.classList.remove("error");
+    if (!validate()) return;
+    if (form.elements.company.value) return;
+    const data = new FormData(form);
+    const first = (data.get("name") || "").trim().split(/\s+/)[0];
+    const method = data.get("contact_method");
+    if (!live) {
+      status.textContent = "Preview only: on bonushub.biz this sends your inquiry to the BonusHub inbox. Nothing was sent from this preview.";
+      status.hidden = false; return;
+    }
+    data.delete("company"); data.delete("form-name");
+    if (!FORM_KEY) {
+      const lines = []; data.forEach((v, k) => lines.push(k.replace(/_/g, " ") + ": " + v));
+      location.href = "mailto:" + LINKS.email + "?subject=" + encodeURIComponent("BonusHub inquiry" + (first ? " from " + first : "")) + "&body=" + encodeURIComponent(lines.join("\n"));
+      $("#done-h").textContent = first ? "Almost done, " + first + "." : "Almost done.";
+      $("#done-p").textContent = "Your email app should open with your inquiry filled in. Press send there and we'll reach out by " + method + ". If nothing opened, email " + LINKS.email + ".";
+      form.hidden = true; $("#form-done").hidden = false;
+      return;
+    }
+    const btn = $("#f-submit"); btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      const payload = Object.fromEntries(data);
+      payload.access_key = FORM_KEY;
+      payload.subject = "New BonusHub inquiry" + (first ? " from " + first : "");
+      payload.from_name = "bonushub.biz";
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || out.success === false) throw new Error(res.status);
+      $("#done-h").textContent = first ? "Thank you, " + first + "." : "Thank you.";
+      $("#done-p").textContent = "Your inquiry is in. We'll reach out by " + method + ".";
+      form.hidden = true; $("#form-done").hidden = false;
+    } catch (err) {
+      status.textContent = "Your inquiry didn't send. Check your connection and try again, or reach us through one of the options below.";
+      status.classList.add("error"); status.hidden = false;
+      btn.disabled = false; btn.textContent = "Send inquiry";
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
