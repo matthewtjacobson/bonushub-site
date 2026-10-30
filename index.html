@@ -79,7 +79,7 @@ a { color: inherit; }
   border-bottom: 1px solid var(--graphite);
 }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
 .brand svg { width: 36px; height: 36px; flex: none; }
 .wordmark { font-family: var(--f-label); color: var(--gold); letter-spacing: .26em; font-size: 15px; }
 .nav { display: flex; align-items: center; gap: 28px; }
@@ -99,9 +99,34 @@ a { color: inherit; }
 .btn-gold:hover { background: var(--parchment); border-color: var(--parchment); }
 .btn-line { background: transparent; color: var(--gold); border-color: var(--deep-gold); }
 .btn-line:hover { border-color: var(--gold); color: var(--parchment); }
-.btn-sm { padding: 10px 16px; font-size: 12px; }
+.btn-sm { padding: 10px 16px; font-size: 12px; min-height: 44px; }
+
+/* Phone menu */
+.menu-btn {
+  display: none; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px;
+  background: transparent; color: var(--parchment); border: 1px solid var(--graphite); border-radius: 2px;
+  font: 600 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+}
+.menu-btn .bars { position: relative; width: 16px; height: 9px; }
+.menu-btn .bars::before, .menu-btn .bars::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--gold); transition: transform .2s, top .2s;
+}
+.menu-btn .bars::before { top: 0; }
+.menu-btn .bars::after { top: 8px; }
+.menu-btn[aria-expanded="true"] .bars::before { top: 4px; transform: rotate(45deg); }
+.menu-btn[aria-expanded="true"] .bars::after { top: 4px; transform: rotate(-45deg); }
+.mobile-menu { border-top: 1px solid var(--graphite); background: var(--onyx); }
+.site-header .mobile-menu .wrap { display: block; padding-block: 4px 10px; }
+.mobile-menu ul { list-style: none; margin: 0; padding: 0; }
+.mobile-menu li + li { border-top: 1px solid var(--graphite); }
+.mobile-menu a {
+  display: flex; align-items: center; justify-content: space-between; min-height: 56px;
+  font-family: var(--f-display); font-size: 20px; color: var(--parchment); text-decoration: none;
+}
+.mobile-menu a::after { content: "→"; font-family: var(--f-body); color: var(--gold); font-size: 16px; }
 
 /* Hero */
+.hero { overflow: hidden; }
 .hero .wrap {
   display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
   gap: clamp(32px, 6vw, 88px); align-items: center;
@@ -223,7 +248,8 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
 .choice input:focus-visible + span { outline: 1px solid var(--gold); outline-offset: 2px; }
 .field label.check { font-size: 14px; font-weight: 400; letter-spacing: 0; text-transform: none; }
 .check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--text); }
-.check input { margin-top: 4px; accent-color: var(--gold); width: 16px; height: 16px; flex: none; }
+.check { min-height: 44px; cursor: pointer; }
+.check input { margin-top: 1px; accent-color: var(--gold); width: 22px; height: 22px; flex: none; cursor: pointer; }
 .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 4px; }
 .form-foot small { color: var(--stone); font-size: 13px; }
 .hp { position: absolute; left: -9999px; }
@@ -234,13 +260,14 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
 .done p { margin: 0; }
 
 /* Contact */
-.contacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--deep-gold); }
+.contacts { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); border-top: 1px solid var(--deep-gold); }
 .contact { padding: 24px 24px 24px 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .contact + .contact { padding-left: 24px; border-left: 1px solid var(--graphite); }
 .contact .k { font-family: var(--f-label); font-size: 13px; letter-spacing: .22em; color: var(--gold); }
 .contact .v { color: var(--parchment); font-size: 16px; overflow-wrap: anywhere; }
-.contact a.v { text-decoration: none; border-bottom: 1px solid var(--graphite); justify-self: start; transition: border-color .2s; }
-.contact a.v:hover { border-color: var(--gold); }
+.contact a.v, .contact a.hint { justify-self: start; display: inline-block; padding-block: 10px; margin-block: -10px; text-decoration: underline; text-decoration-color: var(--graphite); text-decoration-thickness: 1px; text-underline-offset: 6px; transition: text-decoration-color .2s; }
+.contact a.hint { padding-block: 12px; margin-block: -8px -12px; }
+.contact a.v:hover, .contact a.hint:hover { text-decoration-color: var(--gold); }
 .contact .soon { color: var(--stone); font-size: 14px; }
 .contact .hint { font-size: 13px; color: var(--stone); }
 
@@ -248,12 +275,12 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
 .site-footer { border-top: 1px solid var(--graphite); background: var(--onyx); }
 .site-footer .wrap { padding-block: 48px 40px; display: grid; gap: 28px; }
 .foot-top { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; }
-.foot-nav { display: flex; flex-wrap: wrap; gap: 10px 24px; }
-.foot-nav a { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--stone); }
+.foot-nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.foot-nav a { display: inline-block; padding-block: 14px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--stone); }
 .foot-nav a:hover { color: var(--parchment); }
 .disclaimer { font-size: 13px; color: var(--stone); max-width: 92ch; margin: 0; line-height: 1.7; border-top: 1px solid var(--graphite); padding-top: 24px; }
 .disclaimer strong { color: var(--text); font-weight: 600; }
-.privacy summary { cursor: pointer; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); list-style: none; }
+.privacy summary { cursor: pointer; padding-block: 14px; display: inline-block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); list-style: none; }
 .privacy summary::-webkit-details-marker { display: none; }
 .privacy .body { margin-top: 16px; font-size: 14px; max-width: 72ch; display: grid; gap: 10px; }
 .privacy .body p { margin: 0; }
@@ -264,13 +291,18 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .step:nth-child(3) { padding-left: 0; border-left: 0; }
   .step:nth-child(n+3) { border-top: 1px solid var(--graphite); }
-  .contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .contact:nth-child(3) { padding-left: 0; border-left: 0; }
-  .contact:nth-child(n+3) { border-top: 1px solid var(--graphite); }
+  .contacts.count-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contacts.count-4 .contact:nth-child(3) { padding-left: 0; border-left: 0; }
+  .contacts.count-4 .contact:nth-child(n+3) { border-top: 1px solid var(--graphite); }
   .inquiry-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (min-width: 761px) {
+  .mobile-menu { display: none !important; }
 }
 @media (max-width: 760px) {
   .nav a.link { display: none; }
+  .nav { gap: 10px; }
+  .menu-btn { display: inline-flex; }
   .hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .seal-wrap { order: -1; justify-self: start; max-width: 168px; margin: 8px 0 0 12px; }
   .sec-head, .ledger-row { grid-template-columns: minmax(0, 1fr); }
@@ -282,6 +314,13 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
   .step, .step + .step, .contact, .contact + .contact { padding-left: 0; border-left: 0; padding-right: 0; }
   .step + .step, .contact + .contact { border-top: 1px solid var(--graphite); }
   .wordmark { font-size: 13px; letter-spacing: .22em; }
+}
+@media (max-width: 420px) {
+  .menu-label { display: none; }
+  .menu-btn { width: 44px; padding: 0; justify-content: center; }
+  .site-header .wrap { gap: 12px; }
+  .brand { gap: 10px; }
+  .wordmark { font-size: 12px; letter-spacing: .18em; }
   .btn-sm { padding: 9px 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -291,6 +330,19 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
 }
 </style>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "BonusHub",
+  "url": "https://bonushub.biz/",
+  "email": "primary@bonushub.biz",
+  "slogan": "Your Bonus Is Waiting",
+  "description": "Private client service in Florida that helps adults claim sign-up and referral promotions from investing, banking, prediction-market and gaming apps.",
+  "areaServed": "Florida",
+  "sameAs": ["https://www.instagram.com/bon.ushub/"]
+}
+</script>
 </head>
 <body>
 <header class="site-header">
@@ -304,9 +356,21 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
       <a class="link" href="#standards">Standards</a>
       <a class="link" href="#faq">FAQ</a>
       <a class="link" href="#contact">Contact</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span class="bars" aria-hidden="true"></span><span class="menu-label" aria-hidden="true">Menu</span></button>
       <a class="btn btn-gold btn-sm" href="#inquire">Inquire</a>
     </nav>
   </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Sections" hidden>
+    <div class="wrap">
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#standards">Standards</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#inquire">Start an inquiry</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 </header>
 
 <main id="top">
@@ -339,7 +403,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
         <div class="ledger-row"><dt>What we do</dt><dd>Find the promotions you qualify for, walk you through each requirement, and track every payout until it's settled.</dd></div>
         <div class="ledger-row"><dt>Who it's for</dt><dd>Adults who meet each platform's own age and location rules. Some platforms require you to be 21 or older.</dd></div>
         <div class="ledger-row"><dt>How terms work</dt><dd>Your arrangement is agreed in writing before you start: what you do, what you receive, and when.</dd></div>
-        <div class="ledger-row neg"><dt>What we are not</dt><dd>A sportsbook, casino, lender, or investment advisor. We don't fund, hold, or control your accounts. Every account is opened and run by you, with your own money.</dd></div>
+        <div class="ledger-row neg"><dt>What we are not</dt><dd>A sportsbook, a casino, a picks service, or an investment advisor.</dd></div>
         <div class="ledger-row neg"><dt>What we never promise</dt><dd>A guaranteed return. Each promotion is set by its platform and can change or end at any time.</dd></div>
       </dl>
     </div>
@@ -373,7 +437,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
         <div class="standard"><h3>Terms first</h3><p>You see the full arrangement in writing before you sign up for anything.</p></div>
         <div class="standard"><h3>A record of everything</h3><p>Dates, amounts and payouts are kept in a ledger for each client, so there's never a question about what's owed.</p></div>
         <div class="standard"><h3>Discretion</h3><p>Your contact details stay private and are used only for your arrangement with us.</p></div>
-        <div class="standard"><h3>Within the rules</h3><p>We work inside each platform's own rules on age, location and accounts. If you don't qualify for a program, we'll tell you. You open and fund your own accounts, and you stay in control of them the whole time.</p></div>
+        <div class="standard"><h3>Within the rules</h3><p>We work inside each platform's own rules on age, location and accounts. If you don't qualify for a program, we'll tell you.</p></div>
       </div>
     </div>
   </section>
@@ -388,8 +452,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
         <details><summary>Is BonusHub a sportsbook or betting app?</summary><div class="answer"><p>No. BonusHub is a client service. The promotions themselves are offered by separate apps, and you open any account directly with that app under its own terms.</p></div></details>
         <details><summary>Is there a guaranteed return?</summary><div class="answer"><p>No. Every promotion has conditions set by its platform, and platforms can change or end an offer at any time. We explain what each one requires before you start, so you can decide with the full picture.</p></div></details>
         <details><summary>Who can work with BonusHub?</summary><div class="answer"><p>Adults who meet each platform's own eligibility rules. Age minimums and available states differ from app to app, and some require you to be 21 or older. We'll only suggest programs you qualify for.</p></div></details>
-        <details><summary>How do I get paid?</summary><div class="answer"><p>You claim each bonus in your own account, and the platform pays it to you directly. Our fee and when it's due are agreed in writing before you begin, and every payment is recorded in your client ledger. You can ask for a statement at any time.</p></div></details>
-        <details><summary>Do you put money in my account?</summary><div class="answer"><p>No. BonusHub never deposits into, funds, or logs into client accounts. You open and fund every account yourself, and you stay in control of it.</p></div></details>
+        <details><summary>How do I get paid?</summary><div class="answer"><p>Payout terms for your arrangement are agreed in writing before you begin, and every payment is recorded in your client ledger. You can ask for a statement at any time.</p></div></details>
         <details><summary>Someone referred me. Does that matter?</summary><div class="answer"><p>Yes. Put their name or code in the "Referred by" box on the form so they get credit.</p></div></details>
         <details><summary>What information will you ask for?</summary><div class="answer"><p>The inquiry form asks only for contact details. If a specific arrangement later needs identity verification, we'll explain why and how it's kept before collecting anything. Never send photos of your ID, account numbers or passwords through the form or in a DM.</p></div></details>
       </div>
@@ -484,13 +547,14 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
         <a href="#how">How it works</a><a href="#standards">Standards</a><a href="#faq">FAQ</a><a href="#inquire">Inquire</a><a href="#contact">Contact</a>
       </nav>
     </div>
-    <p class="disclaimer"><strong>BonusHub is not a sportsbook, casino, bank, lender or financial advisor.</strong> Promotions are offered and controlled by each platform, may change or end at any time, and carry their own terms and eligibility rules. Nothing on this site is a promise of any return. Services are limited to adults who meet each platform's requirements. If gambling stops being fun, call or text 1-800-GAMBLER for free, confidential help.</p>
+    <p class="disclaimer"><strong>BonusHub is not a sportsbook, casino, bank or financial advisor.</strong> Promotions are offered and controlled by each platform, may change or end at any time, and carry their own terms and eligibility rules. Nothing on this site is a promise of any return. Services are limited to adults who meet each platform's requirements. If gambling stops being fun, call or text 1-800-GAMBLER for free, confidential help.</p>
     <details class="privacy" id="privacy">
       <summary>Privacy notice</summary>
       <div class="body">
         <p><strong>What we collect.</strong> The details you enter in the inquiry form: name, email, phone, state, how you found us, who referred you, your preferred contact method and any message.</p>
         <p><strong>Why.</strong> To respond to your inquiry and, if you become a client, to run your arrangement and keep accurate records.</p>
-        <p><strong>Where it's kept.</strong> With the service that hosts this form and in our business email. We don't sell your information or share it for advertising.</p>
+        <p><strong>Where it's kept.</strong> With Web3Forms, the service that delivers the inquiry form to us, and in our business email. We don't sell your information or share it for advertising.</p>
+        <p id="privacy-analytics" hidden><strong>Visitor stats.</strong> We use Cloudflare Web Analytics to count visits and see which pages people view. It doesn't use cookies or identify you personally.</p>
         <p><strong>Your choices.</strong> Ask us at any time to see, correct or delete what you sent us, using any contact method on this page.</p>
       </div>
     </details>
@@ -499,13 +563,21 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--ston
 </footer>
 
 <script>
-/* ── Edit your links here. Leave a value empty ("") and the site shows "Coming soon". ── */
+/* ── Edit your links here.
+   ""     = shows "Coming soon"
+   null   = hidden from the site
+   a link = shown as a clickable handle ── */
 const LINKS = {
   discord:   "https://discord.gg/ZnXUZwYshb",
-  instagram: "https://instagram.com/bon.ushub",
-  tiktok:    "",   // e.g. https://tiktok.com/@bonushub
+  instagram: "https://www.instagram.com/bon.ushub/",
+  tiktok:    null,    // when you start one: "https://www.tiktok.com/@yourhandle"
   email:     "primary@bonushub.biz"
 };
+
+/* ── Visitor stats (Cloudflare Web Analytics, free, no cookies).
+   Paste the token from Cloudflare → Analytics & Logs → Web Analytics → Add a site (bonushub.biz) → "JS snippet".
+   The token is the value after "token": in that snippet. Leave "" to keep stats off. ── */
+const ANALYTICS_TOKEN = "";
 
 /* ── Inquiry form: paste your free Web3Forms access key between the quotes (web3forms.com → enter primary@bonushub.biz → key arrives by email).
    Until a key is set, "Send inquiry" opens the visitor's email app with their inquiry filled in, addressed to LINKS.email. ── */
@@ -514,15 +586,44 @@ const FORM_KEY = "dc7f9514-6f32-4161-a8a1-99d1a13bb9f2";
 (function () {
   const $ = (s, r = document) => r.querySelector(s);
 
+  // Phone menu
+  const menuBtn = $("#menu-btn"), menu = $("#mobile-menu");
+  const setMenu = open => {
+    menu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.querySelector(".menu-label").textContent = open ? "Close" : "Menu";
+    menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  };
+  menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+  menu.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+  document.addEventListener("click", e => { if (!menu.hidden && !e.target.closest(".site-header")) setMenu(false); });
+  window.addEventListener("resize", () => { if (window.innerWidth > 760 && !menu.hidden) setMenu(false); });
+
+  // Visitor stats
+  if (ANALYTICS_TOKEN) {
+    const s = document.createElement("script");
+    s.defer = true; s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    s.setAttribute("data-cf-beacon", JSON.stringify({ token: ANALYTICS_TOKEN }));
+    document.body.appendChild(s);
+    $("#privacy-analytics").hidden = false;
+  }
+
   // Contact cards
-  const handle = url => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  const handle = url => {
+    const clean = url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+    if (/^(instagram\.com|tiktok\.com)\//.test(clean)) return "@" + clean.split("/").pop().replace(/^@/, "");
+    return clean;
+  };
   const cards = [
-    { k: "Discord", url: LINKS.discord, hint: "Public lobby" },
-    { k: "Instagram", url: LINKS.instagram, hint: "DMs open" },
-    { k: "TikTok", url: LINKS.tiktok, hint: "Posts and updates" },
-    { k: "Email", email: LINKS.email, hint: "For anything detailed" }
-  ];
+    { k: "Discord", url: LINKS.discord, raw: LINKS.discord, hint: "Public lobby" },
+    { k: "Instagram", url: LINKS.instagram, raw: LINKS.instagram, hint: "DMs open" },
+    { k: "TikTok", url: LINKS.tiktok, raw: LINKS.tiktok, hint: "Posts and updates" },
+    { k: "Email", email: LINKS.email, raw: LINKS.email, hint: "For anything detailed" }
+  ].filter(c => c.raw !== null && c.raw !== undefined);
   const box = $("#contacts");
+  box.style.setProperty("--n", cards.length);
+  box.classList.add("count-" + cards.length);
+  if (LINKS.tiktok === null) document.querySelectorAll('#f-source option').forEach(o => { if (o.textContent === "TikTok") o.remove(); });
   cards.forEach(c => {
     const el = document.createElement("div");
     el.className = "contact";
